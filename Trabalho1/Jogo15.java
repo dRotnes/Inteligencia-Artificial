@@ -36,10 +36,12 @@ class Board{
 
 class BoardNode{
     Board board;
+    int depth;
     ArrayList<Board> children;
 
-    BoardNode(Board b, ArrayList<Board> c){
+    BoardNode(Board b, int d, ArrayList<Board> c){
         board = b;
+        depth = d;
         children = c;
     }
     ArrayList<Board> getChildren(){
@@ -47,6 +49,9 @@ class BoardNode{
     }
     Board getBoard(){
         return board;
+    }
+    int getDepth(){
+        return depth;
     }
 
 }
@@ -150,7 +155,7 @@ class Jogo15{
         return new Board(new_table, blank_row + 1, blank_col, getStringTable(new_table));
     }
 
-    static BoardNode calculateNextPossibilites(Board board){
+    static BoardNode calculateNextPossibilites(Board board, int depth){
 
         int blank_col = board.getBlankCol();
         int blank_row = board.getBlankRow();
@@ -177,20 +182,12 @@ class Jogo15{
             // System.out.println("DOWN: "+new_board.getStringTable());
             children.add(new_board);             
         }
-        BoardNode node = new BoardNode(board, children);
+        BoardNode node = new BoardNode(board, depth, children);
         return node;
     }
 
-    // static void DepthFirstSearchRec(Stack<Board> stack, ArrayList<String> visited_nodes, int depth){
-    //     if(stack.isEmpty()){
-    //         System.out.println("\nEmpty Stack");
-    //     }
-    //     Board current_node = stack.pop();
-        
-    // }
-
     static void DepthFirstSearch(Board initial_board){
-        BoardNode root = calculateNextPossibilites(initial_board);
+        BoardNode root = calculateNextPossibilites(initial_board, 0);
         Stack<BoardNode> stack = new Stack<BoardNode>();
         ArrayList<String> visited_nodes = new ArrayList<String>();
         int depth = 0;
@@ -199,14 +196,14 @@ class Jogo15{
             BoardNode node = stack.pop();
             Board current_board = node.getBoard();
             if(checkIfSolution(current_board)){
-                System.out.println("Solution Found in: " + depth + " movements");
+                System.out.println("Solution Found in: " + node.getDepth() + " movements");
                 return;
             }
             if(!visited_nodes.contains(current_board.getStringTable())){
                 visited_nodes.add(current_board.getStringTable());
                 if(node.getChildren().size() > 0  ){
                     for(Board child : node.getChildren()){
-                        BoardNode new_node = calculateNextPossibilites(child);
+                        BoardNode new_node = calculateNextPossibilites(child, node.getDepth() + 1);
                         stack.add(new_node);
                     }
                     depth++;      
