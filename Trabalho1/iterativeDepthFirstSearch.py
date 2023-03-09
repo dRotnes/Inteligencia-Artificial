@@ -5,8 +5,8 @@ def __DFSLimRec(board: Board, path: list, depth:int, limit:int):
     # print(board.getBoard())
     path.append(board.getTable())
     if(checkIfSolution(board)):
-        print("---------- FOUND SOLUTION IN DEPTH " + str(depth) + " ----------\n")
         return path, True
+    
     right:Board = moveRight(board)
     left:Board = moveLeft(board)
     up:Board = moveUp(board)
@@ -15,8 +15,7 @@ def __DFSLimRec(board: Board, path: list, depth:int, limit:int):
     if(depth==limit):
         if(right is not None or left is not None or up is not None or down is not None):
             return None, False
-        else:
-            return None, True
+        return None, True
 
     children = []
     end = True
@@ -49,6 +48,7 @@ def IDFS(initial_board):
     while not dfslim:
         result, dfslim = __DFSLim(initial_board, limit)
         if result is not None:
+            print("---------- FOUND SOLUTION IN DEPTH " + str(limit) + " ----------\n")
             return result
         print("---------- NO SOLUTION FOUND IN LIMIT " + str(limit) + " ----------\n")
         limit+=1

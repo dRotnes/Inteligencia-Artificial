@@ -3,6 +3,7 @@ from shared import FINAL_TABLE, BLANK_ROW_FINAL, NUM_INVERSIONS_FINAL
 from depthFirstSearch import DFS
 from iterativeDepthFirstSearch import IDFS
 from breadthFirstSearch import BFS
+from heuristics import sumWrongPlacesHeuristics, manhattanHeuristics
 
 def testSolvability(blank_row, num_inversions):
     return (num_inversions%2 == 0) == (blank_row%2 == 1)
@@ -50,10 +51,10 @@ if(testSolvability(4 - blank_row,num_inversions) == (testSolvability(4 - BLANK_R
     initial_board = Board(initial_table, blank_row, blank_col)
     
     print("---------- STARTING DFS ----------\n")
-    try:
-        DFS(initial_board)
-    except:
-        print("DFS REACHED MAXIMUM RECURSION DEPTH, NO SOLUTION FOUND\n")
+    dfs = DFS(initial_board)
+    if(dfs is not None):
+        for i in dfs:
+            print(str(i) + " =>" )
     print("---------- END OF DFS ----------\n")
 
     print("---------- STARTING IDFS ----------\n")
@@ -74,6 +75,8 @@ if(testSolvability(4 - blank_row,num_inversions) == (testSolvability(4 - BLANK_R
     # except:
     #     print("BFS REACHED MAXIMUM POINT")
 
+    print(sumWrongPlacesHeuristics(initial_board))
+    print(manhattanHeuristics(initial_board))
 else:
     raise Exception("UNSOLVABLE BOARD: the initial configuration can't take you to the final configuration")
 
