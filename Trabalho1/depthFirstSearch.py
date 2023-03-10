@@ -1,20 +1,17 @@
 from board import Board
 from shared import checkIfSolution, moveUp, moveDown, moveLeft, moveRight
 
-def __DFSRec(board: Board, path: list, depth:int):
+def __DFSRec(board: Board, path: list, depth:int, num_nodes_gen:int):
     # print(board.getBoard())
     path.append(board.getTable())
     if(checkIfSolution(board)):
         print("---------- FOUND SOLUTION IN DEPTH " + str(depth) + " ----------")
-        return path
+        return path, num_nodes_gen
     
     right:Board = moveRight(board)
     left:Board = moveLeft(board)
     up:Board = moveUp(board)
     down:Board = moveDown(board)
-
-    if(right is None and left is None and up is None and down is None):
-        return None
     
     children = []
     
@@ -31,20 +28,21 @@ def __DFSRec(board: Board, path: list, depth:int):
         children.append(up)
 
     for child in children:
-        dfsRec = __DFSRec(child, list(map(list, path)), depth + 1)
+        num_nodes_gen+=1
+        dfsRec, n_nodes = __DFSRec(child, list(map(list, path)), depth + 1, num_nodes_gen)
         if dfsRec is not None:
-            return dfsRec
-    return None
+            return dfsRec, n_nodes
+    return None, None
 
 def DFS(initial_board):
     visited = []
     try:
-        result = __DFSRec(initial_board,visited,0)
+        result, num_nodes_gen= __DFSRec(initial_board,visited,0, 1)
         if result is not None:
-            return result
+            return result, num_nodes_gen 
         else:
             print("NO SOLUTION FOUND ON DFS")
     except:
         print("DFS REACHED MAXIMUM RECURSION DEPTH, NO SOLUTION FOUND\n")
-        return None
+        return None, None
 

@@ -11,7 +11,7 @@ def checkIfSolution(board: Board):
     return False
 
 def moveDown(board:Board):
-    if(board.getBlankRow() + 1 <=3):
+    if(board.getBlankRow()<3):
         blank_row = board.getBlankRow()
         blank_col = board.getBlankCol()
         new_table = list(map(list, board.getTable())) 
@@ -24,7 +24,7 @@ def moveDown(board:Board):
     return None
 
 def moveUp(board:Board):
-    if(board.getBlankRow() - 1 >=0):
+    if(board.getBlankRow()>0):
         blank_row = board.getBlankRow()
         blank_col = board.getBlankCol()
         new_table = list(map(list, board.getTable())) 
@@ -37,7 +37,7 @@ def moveUp(board:Board):
     return None
 
 def moveRight(board:Board):
-    if(board.getBlankCol() + 1 <=3):
+    if(board.getBlankCol()<3):
         blank_row = board.getBlankRow()
         blank_col = board.getBlankCol()
         new_table = list(map(list, board.getTable())) 
@@ -50,7 +50,7 @@ def moveRight(board:Board):
     return None
 
 def moveLeft(board:Board):
-    if(board.getBlankCol() - 1 >=0):
+    if(board.getBlankCol()>0):
         blank_row = board.getBlankRow()
         blank_col = board.getBlankCol()
         new_table = list(map(list, board.getTable())) 

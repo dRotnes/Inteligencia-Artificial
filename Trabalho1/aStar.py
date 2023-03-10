@@ -2,7 +2,7 @@ from heuristics import chooseGetHeuristics
 from shared import checkIfSolution, moveDown, moveLeft, moveRight, moveUp
 from board import Board
 
-def __A_StarRec(frontier:list, visited:list, heuristic:str):
+def __A_StarRec(frontier:list, visited:list, heuristic:str, num_nodes_gen:str):
     if(frontier):
         frontier.sort(key=lambda x: x[0])
         cur = frontier.pop(0)
@@ -11,7 +11,7 @@ def __A_StarRec(frontier:list, visited:list, heuristic:str):
         visited.append(cur_board.getTable())
 
         if checkIfSolution(cur_board):
-            return visited, cur_depth
+            return visited, cur_depth, num_nodes_gen
         
         children = []
         right:Board = moveRight(cur_board)
@@ -32,12 +32,13 @@ def __A_StarRec(frontier:list, visited:list, heuristic:str):
             children.append(down)
         
         for child in children:
+            num_nodes_gen += 1
             frontier.append((chooseGetHeuristics(child, heuristic), child, cur_depth+1))
         
-        return __A_StarRec(frontier, visited, heuristic)
-    return None, None
+        return __A_StarRec(frontier, visited, heuristic, num_nodes_gen)
+    return None, None, num_nodes_gen
 
 def A_star(initial_board:Board, heuristic:str):
     frontier = [(chooseGetHeuristics(initial_board, heuristic), initial_board, 0)]
     visited = []
-    return __A_StarRec(frontier, visited, heuristic)
+    return __A_StarRec(frontier, visited, heuristic, 0)
