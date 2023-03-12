@@ -11,7 +11,7 @@ def BFS(initial_board:Board):
         visited.append(current[0].getTable())
         # print(current[0].getTable())
         if checkIfSolution(current[0]):
-            return True, current[1], visited, num_nodes_gen
+            return visited, current[1], num_nodes_gen
         
         right:Board = moveRight(current[0])
         left:Board = moveLeft(current[0])
@@ -19,7 +19,7 @@ def BFS(initial_board:Board):
         down:Board = moveDown(current[0])
 
         if(right is None and left is None and up is None and down is None):
-            return False, None
+            return None, None, None
         
         if(right is not None and right.getTable() not in visited):
             queue.append((right, current[1]+1)) 

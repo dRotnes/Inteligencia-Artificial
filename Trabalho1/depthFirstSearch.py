@@ -5,8 +5,7 @@ def __DFSRec(board: Board, path: list, depth:int, num_nodes_gen:int):
     # print(board.getBoard())
     path.append(board.getTable())
     if(checkIfSolution(board)):
-        print("---------- FOUND SOLUTION IN DEPTH " + str(depth) + " ----------")
-        return path, num_nodes_gen
+        return path, num_nodes_gen, str(depth)
     
     right:Board = moveRight(board)
     left:Board = moveLeft(board)
@@ -29,20 +28,17 @@ def __DFSRec(board: Board, path: list, depth:int, num_nodes_gen:int):
 
     for child in children:
         num_nodes_gen+=1
-        dfsRec, n_nodes = __DFSRec(child, list(map(list, path)), depth + 1, num_nodes_gen)
+        dfsRec, n_nodes, depthRec = __DFSRec(child, path, depth + 1, num_nodes_gen)
         if dfsRec is not None:
-            return dfsRec, n_nodes
-    return None, None
+            return dfsRec, n_nodes, depthRec
+    return None, None, None
 
 def DFS(initial_board):
     visited = []
     try:
-        result, num_nodes_gen= __DFSRec(initial_board,visited,0, 1)
-        if result is not None:
-            return result, num_nodes_gen 
-        else:
-            print("NO SOLUTION FOUND ON DFS")
+        result, num_nodes_gen, depth = __DFSRec(initial_board,visited,0, 1)
+        return result, num_nodes_gen , depth
     except:
-        print("DFS REACHED MAXIMUM RECURSION DEPTH, NO SOLUTION FOUND\n")
-        return None, None
+        print("MAXIMUM RECURSION DEPTH EXCEEDED\n")
+        return None, None, None
 

@@ -1,0 +1,7 @@
+To run this program is extremely easy. 
+
+1. You need to have Python 3.10 installed
+2. Go to the correct folder where the codes are
+3. If you want to change the initial and final boards edit the config.txt file (first line is initial, second line is final). There are some examples of solvable and unsolvable boards in the file tests.txt if you want. 
+3. run: python main.py
+4. Enjoy!

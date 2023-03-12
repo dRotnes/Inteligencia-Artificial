@@ -39,6 +39,10 @@ def __A_StarRec(frontier:list, visited:list, heuristic:str, num_nodes_gen:str):
     return None, None, num_nodes_gen
 
 def A_star(initial_board:Board, heuristic:str):
-    frontier = [(chooseGetHeuristics(initial_board, heuristic), initial_board, 0)]
-    visited = []
-    return __A_StarRec(frontier, visited, heuristic, 0)
+    try:
+        frontier = [(chooseGetHeuristics(initial_board, heuristic), initial_board, 0)]
+        visited = []
+        return __A_StarRec(frontier, visited, heuristic, 0)
+    except:
+        print("MAXIMUM RECURSION DEPTH EXCEEDED\n")
+        return None, None, None

@@ -50,8 +50,7 @@ def IDFS(initial_board):
         result, dfslim, n_nodes = __DFSLim(initial_board, limit,0)
         num_nodes_gen += n_nodes
         if result is not None:
-            print("---------- FOUND SOLUTION IN DEPTH " + str(limit) + " ----------\n")
-            return result, num_nodes_gen
-        print("---------- NO SOLUTION FOUND IN LIMIT " + str(limit) + " ----------\n")
+            return result, num_nodes_gen, limit
+        print("NO SOLUTION FOUND IN LIMIT " + str(limit))
         limit+=1
     return None

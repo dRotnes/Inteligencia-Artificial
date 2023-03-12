@@ -36,5 +36,10 @@ def __greedyRec(board:Board, visited:list, heuristic:str, depth:int, num_nodes_g
     return None, None, num_nodes_gen
 
 def greedy(initial_board:Board, heuristic:str):
-    visited = []
-    return __greedyRec(initial_board, visited, heuristic, 0, 0)
+    try:
+        visited = []
+        return __greedyRec(initial_board, visited, heuristic, 0, 0)
+    except:
+        print("MAXIMUM RECURSION DEPTH EXCEEDED\n")
+        return None, None, None
+
